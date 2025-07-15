@@ -12,8 +12,7 @@ from typing import List, Tuple, Dict, Any, Optional
 from transformers import BertTokenizerFast
 from torch.utils.data import Dataset
 
-# 设置日志
-logging.basicConfig(level=logging.INFO)
+# 获取日志记录器，但不配置基本设置（让主脚本来配置）
 logger = logging.getLogger(__name__)
 
 

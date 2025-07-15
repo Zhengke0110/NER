@@ -3,8 +3,7 @@ import os
 from typing import List
 import logging
 
-# 设置日志
-logging.basicConfig(level=logging.INFO)
+# 获取日志记录器，但不配置基本设置（让主脚本来配置）
 logger = logging.getLogger(__name__)
 
 # 使用最常用的BIO标注方法

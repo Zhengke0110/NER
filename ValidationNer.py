@@ -20,9 +20,21 @@ validation_config = ValidationConfig.from_json_with_fallback(
     "config.json", "validation"
 )
 
+# 确保logs目录存在
+logs_dir = Path("logs")
+logs_dir.mkdir(exist_ok=True)
+
+# 确保log_file路径是绝对路径或相对于项目根目录
+log_file_path = validation_config.log_file
+if not os.path.isabs(log_file_path):
+    log_file_path = os.path.join(os.getcwd(), log_file_path)
+
+# 确保日志文件的目录存在
+os.makedirs(os.path.dirname(log_file_path), exist_ok=True)
+
 # 配置日志
 log_handlers = [
-    logging.FileHandler(validation_config.log_file, encoding="utf-8"),
+    logging.FileHandler(log_file_path, encoding="utf-8"),
     logging.StreamHandler(),
 ]
 

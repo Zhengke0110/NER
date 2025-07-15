@@ -6,6 +6,7 @@
 import logging
 import sys
 import os
+from pathlib import Path
 
 os.environ["HF_ENDPOINT"] = "https://hf-mirror.com"  # 设置Hugging Face镜像
 
@@ -26,9 +27,21 @@ from utils.trainingUtils import (
     run_training,
 )
 
-# 设置日志
+# 确保logs目录存在
+logs_dir = Path("logs")
+logs_dir.mkdir(exist_ok=True)
+
+# 设置日志 - 同时输出到控制台和文件
+log_handlers = [
+    logging.FileHandler("logs/training.log", encoding="utf-8"),
+    logging.StreamHandler(sys.stdout)
+]
+
 logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+    level=logging.INFO, 
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    handlers=log_handlers,
+    force=True  # 强制重新配置日志
 )
 logger = logging.getLogger(__name__)
 

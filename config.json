@@ -33,7 +33,7 @@
     "model_path": "./output/checkpoint-1000",
     "tokenizer_path": "bert-base-chinese",
     "val_file": "./data/val.txt",
-    "log_file": "validation.log",
+    "log_file": "./logs/validation.log",
     "log_level": "INFO",
     "output_dir": "./validation_output",
     "single_output_file": "single_validation_results.json",

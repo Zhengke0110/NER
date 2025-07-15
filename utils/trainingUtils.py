@@ -9,8 +9,7 @@ from typing import Dict, Any, List, Optional
 from transformers import TrainingArguments, Trainer
 import evaluate
 
-# 设置日志
-logging.basicConfig(level=logging.INFO)
+# 获取日志记录器，但不配置基本设置（让主脚本来配置）
 logger = logging.getLogger(__name__)
 
 
