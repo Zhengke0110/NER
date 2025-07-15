@@ -6,6 +6,6 @@
 **/*.log
 
 **/*.json
-
+checkpoint/
 !**/config.json
 !**/label_mappings.json
