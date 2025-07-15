@@ -1,0 +1,53 @@
+{
+  "data": {
+    "data_dir": "D:\\NLP_Project\\NER\\data",
+    "train_file": "train.txt",
+    "val_file": "test.txt",
+    "test_file": "val.txt",
+    "max_length": 512,
+    "encoding": "UTF-8"
+  },
+  "model": {
+    "model_name": "bert-base-chinese",
+    "num_labels": 7,
+    "dropout": 0.1
+  },
+  "training": {
+    "output_dir": "./output",
+    "checkpoint_dir": "./checkpoint",
+    "logging_dir": "./logs",
+    "num_train_epochs": 1000,
+    "per_device_train_batch_size": 8,
+    "per_device_eval_batch_size": 8,
+    "learning_rate": 5e-5,
+    "warmup_steps": 500,
+    "weight_decay": 0.01,
+    "logging_steps": 10,
+    "save_strategy": "steps",
+    "save_steps": 1000,
+    "save_total_limit": 1,
+    "eval_strategy": "steps",
+    "eval_steps": 1000
+  },
+  "validation": {
+    "model_path": "./output/checkpoint-1000",
+    "tokenizer_path": "bert-base-chinese",
+    "log_file": "validation.log",
+    "log_level": "INFO",
+    "output_dir": "./validation_output",
+    "single_output_file": "single_validation_results.json",
+    "batch_output_file": "batch_validation_results.json",
+    "max_length": 512,
+    "device": "cpu",
+    "default_test_texts": [
+      "2009年高考在北京的报名费是2009元",
+      "2020年研究生考试在上海进行",
+      "明年的公务员考试将在广州举办",
+      "2018年高考报名费用是100元",
+      "去年的期末考试在深圳大学举行",
+      "今年中考将在杭州市举行",
+      "2022年考研报名时间是10月份",
+      "期中考试安排在教学楼进行"
+    ]
+  }
+}

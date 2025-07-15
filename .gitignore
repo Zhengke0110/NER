@@ -1,3 +1,11 @@
 **/*.pyc
 
 **/__pycache__/
+**output/
+
+**/*.log
+
+**/*.json
+
+!**/config.json
+!**/label_mappings.json
