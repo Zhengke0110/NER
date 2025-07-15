@@ -286,6 +286,9 @@ class ValidationConfig:
     model_path: str = "./output/checkpoint-1000"
     tokenizer_path: str = "bert-base-chinese"
 
+    # 验证集文件路径
+    val_file: Optional[str] = "./data/val.txt"
+
     # 日志配置
     log_file: str = "validation.log"
     log_level: str = "INFO"
@@ -387,6 +390,7 @@ class ValidationConfig:
         return {
             "model_path": self.model_path,
             "tokenizer_path": self.tokenizer_path,
+            "val_file": self.val_file,
             "log_file": self.log_file,
             "log_level": self.log_level,
             "output_dir": self.output_dir,
@@ -396,6 +400,28 @@ class ValidationConfig:
             "device": self.device,
             "default_test_texts": self.default_test_texts,
         }
+
+    def get_val_file_path(self) -> Optional[str]:
+        """
+        获取验证集文件的完整路径
+
+        Returns:
+            验证集文件路径，如果不存在则返回None
+        """
+        if self.val_file:
+            # 如果是相对路径，转换为绝对路径
+            if not os.path.isabs(self.val_file):
+                val_path = os.path.join(os.getcwd(), self.val_file)
+            else:
+                val_path = self.val_file
+
+            # 检查文件是否存在
+            if os.path.exists(val_path):
+                return val_path
+            else:
+                logger.warning(f"验证集文件不存在: {val_path}")
+                return None
+        return None
 
 
 # 默认配置实例

@@ -1,7 +1,7 @@
 {
   "data": {
     "data_dir": "D:\\NLP_Project\\NER\\data",
-    "train_file": "train.txt",
+    "train_file": "train_BIO.txt",
     "val_file": "test.txt",
     "test_file": "val.txt",
     "max_length": 512,
@@ -32,6 +32,7 @@
   "validation": {
     "model_path": "./output/checkpoint-1000",
     "tokenizer_path": "bert-base-chinese",
+    "val_file": "./data/val.txt",
     "log_file": "validation.log",
     "log_level": "INFO",
     "output_dir": "./validation_output",

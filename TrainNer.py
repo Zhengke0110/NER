@@ -13,9 +13,9 @@ os.environ["HF_ENDPOINT"] = "https://hf-mirror.com"  # 设置Hugging Face镜像
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from utils.config import (
-    DEFAULT_DATA_CONFIG,
-    DEFAULT_MODEL_CONFIG,
-    DEFAULT_TRAINING_CONFIG,
+    DataConfig,
+    ModelConfig,
+    TrainingConfig,
 )
 from utils.dataUtils import prepare_datasets
 from utils.modelUtils import create_model, print_model_summary
@@ -38,10 +38,22 @@ def main():
     try:
         logger.info("开始NER模型训练流程")
 
+        # 从config.json加载配置
+        logger.info("加载配置文件...")
+        data_config = DataConfig.from_json_with_fallback("config.json", "data")
+        model_config = ModelConfig.from_json_with_fallback("config.json", "model")
+        training_config = TrainingConfig.from_json_with_fallback(
+            "config.json", "training"
+        )
+
+        logger.info("配置加载完成")
+        logger.info(f"数据配置: {data_config.to_dict()}")
+        logger.info(f"模型配置: {model_config.to_dict()}")
+
         # 准备数据集
         logger.info("准备数据集...")
         train_dataset, val_dataset, tag2id, id2tag, label_list = prepare_datasets(
-            DEFAULT_DATA_CONFIG, DEFAULT_MODEL_CONFIG
+            data_config, model_config
         )
 
         logger.info(f"训练集样本数: {len(train_dataset)}")
@@ -50,7 +62,7 @@ def main():
 
         # 创建模型
         logger.info("创建模型...")
-        model = create_model(DEFAULT_MODEL_CONFIG, tag2id, id2tag)
+        model = create_model(model_config, tag2id, id2tag)
 
         # 打印模型摘要
         print_model_summary(model)
@@ -61,7 +73,7 @@ def main():
 
         # 创建训练参数
         logger.info("创建训练参数...")
-        training_args = create_training_arguments(DEFAULT_TRAINING_CONFIG)
+        training_args = create_training_arguments(training_config)
 
         # 创建Trainer
         logger.info("创建Trainer...")
@@ -77,8 +89,8 @@ def main():
         logger.info("开始训练...")
         results = run_training(
             trainer=trainer,
-            training_config=DEFAULT_TRAINING_CONFIG,
-            model_config=DEFAULT_MODEL_CONFIG,
+            training_config=training_config,
+            model_config=model_config,
             tag2id=tag2id,
             id2tag=id2tag,
         )
